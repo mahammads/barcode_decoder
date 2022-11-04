@@ -1,0 +1,11 @@
+
+dbr
+fastapi
+uvicorn[standard]
+opencv-python
+openpyxl
+pytesseract
+python-multipart
+pdf2image
+PyPDF2
+aspose-words
