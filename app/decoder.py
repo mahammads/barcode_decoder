@@ -105,10 +105,16 @@ def barcode_decode(input_file):
         for img in os.listdir(image_path):
             img_path = os.path.join(image_path, img)
             result = get_output(img_path)
+            try:
+                result = ','.join(result)
+            except:
+                result = [data.decode() for data in result]
+                result = ','.join(result)
+
             if result == "no barcode detected":
                 continue
             else:
-                output_list.append(result[0])
+                output_list.append(result)
         return output_list
     
     if input_file.endswith(".docx"):
