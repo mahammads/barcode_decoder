@@ -12,8 +12,10 @@ tesseract =config.tesseract
 pt.pytesseract.tesseract_cmd = tesseract
 poppler_path = config.poppler_path
 
-
-
+base_dir = os.getcwd()
+temp_image_path = os.path.join(base_dir, 'pdf_to_images')
+if not os.path.exists(temp_image_path):
+    os.makedirs(temp_image_path)
 #------------------------------------------------------------------------#
 #  This function is used for decoding single barcode or qr code          #
 #------------------------------------------------------------------------#
@@ -64,7 +66,7 @@ def get_output(image):
 #  This function is used converting the pdf to images for further processing.    #
 #--------------------------------------------------------------------------------#
 def pdf_to_image(fullpath_pdf):
-    temp_images = config.temp_image_path
+    temp_images = temp_image_path
     pdf_name =os.path.split(fullpath_pdf)[-1]
     print(pdf_name)
     try:

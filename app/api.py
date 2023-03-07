@@ -3,20 +3,23 @@ import os
 from fastapi import FastAPI ,File, Form, UploadFile
 from app import config
 from app.decoder import barcode_decode
-barcode_extraction = FastAPI()
+data_extract = FastAPI()
 
-@barcode_extraction.get("/home/")
+base_dir = os.getcwd()
+@data_extract.get("/home/")
 def read_root():
    return {"Status": "UP"}
 
-@barcode_extraction.post("/get_barcode_data/")
+@data_extract.post("/get_barcode_data/")
 async def get_barcode_data(uploaded_file: UploadFile = File(...)):
-    path = config.input_file_path
+    input_path = os.path.join(base_dir, 'input')
+    if not os.path.exists(input_path):
+        os.makedirs(input_path)
     
-    files_to_delete=os.listdir(path)
+    files_to_delete=os.listdir(input_path)
     for i in files_to_delete:
-        os.remove(path+'/'+i)
-    file_location = f"{path}/{uploaded_file.filename}"
+        os.remove(input_path+'/'+i)
+    file_location = f"{input_path}/{uploaded_file.filename}"
     with open(file_location, "wb") as file_object:
         file_object.write(uploaded_file.file.read())
     try:          
